@@ -6,9 +6,9 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-600 text-white p-4 shadow-lg">
+    <nav className="bg-black text-white p-4 shadow-lg">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-semibold">
+        <Link to="/" className="text-2xl font-semibold cursor-none">
           Mohit Malaya Nandy
         </Link>
         
@@ -17,6 +17,7 @@ const Navbar = () => {
           <Link to="/" className="hover:text-gray-300 transition">Home</Link>
           <Link to="/about" className="hover:text-gray-300 transition">About</Link>
           <Link to="/projects" className="hover:text-gray-300 transition">Projects</Link>
+          <Link to="/resume" className="hover:text-gray-300 transition">Resume</Link>
           <Link to="/contact" className="hover:text-gray-300 transition">Contact</Link>
         </div>
 

@@ -1,6 +1,7 @@
 // src/routes/AppRoutes.jsx
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import Resume from "../pages/Resume";
 
 // Lazy-loaded components
 const Home = lazy(() => import("../pages/Home"));
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/resume" element={<Resume />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
