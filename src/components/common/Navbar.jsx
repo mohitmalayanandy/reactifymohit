@@ -1,48 +1,171 @@
-// src/components/Navbar.jsx
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Sun, Moon, Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  // Handle theme switching
+  useEffect(() => {
+    // Check user preference from localStorage or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "light") {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove("dark");
+    } else if (savedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else if (prefersDark) {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location]);
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
+    { to: "/projects", label: "Projects" },
+    { to: "/resume", label: "Resume" },
+    { to: "/contact", label: "Contact" }
+  ];
+
+  // Check if link is active
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
-    <nav className="bg-black text-white p-4 shadow-lg">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-semibold cursor-none">
-          Mohit Malaya Nandy
-        </Link>
-        
-        {/* Desktop Menu */}
-        <div className="space-x-6 hidden md:flex">
-          <Link to="/" className="hover:text-gray-300 transition">Home</Link>
-          <Link to="/about" className="hover:text-gray-300 transition">About</Link>
-          <Link to="/projects" className="hover:text-gray-300 transition">Projects</Link>
-          <Link to="/resume" className="hover:text-gray-300 transition">Resume</Link>
-          <Link to="/contact" className="hover:text-gray-300 transition">Contact</Link>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className="md:hidden">
-          <button 
-            className="text-2xl" 
-            aria-label="Menu"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+    <header className={`fixed w-full top-0 z-50 ${scrolled ? "backdrop-blur-xs bg-white/80 dark:bg-black/80 shadow-md" : "bg-white dark:bg-black"} transition-all duration-400`}>
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 md:h-20">
+          {/* Logo */}
+          <Link 
+            to="/" 
+            className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity"
           >
-            ☰
-          </button>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+              Mohit Malaya Nandy
+            </span>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={`px-3 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 ${
+                  isActive(link.to)
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
+                    : "text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:text-blue-400 dark:hover:bg-gray-800/50"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            
+            {/* Theme Toggle - Desktop */}
+            <button
+              onClick={toggleTheme}
+              className="ml-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? (
+                <Sun size={20} className="text-yellow-400" />
+              ) : (
+                <Moon size={20} className="text-gray-700" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Navigation Controls */}
+          <div className="flex items-center md:hidden space-x-2">
+            {/* Theme Toggle - Mobile */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? (
+                <Sun size={20} className="text-yellow-400" />
+              ) : (
+                <Moon size={20} className="text-gray-700" />
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Dropdown */}
+      <div 
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen 
+            ? "max-h-96 opacity-100 border-t border-gray-200 dark:border-gray-800" 
+            : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="px-4 py-2 bg-white dark:bg-black space-y-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
+                isActive(link.to)
+                  ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
+                  : "text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:text-blue-400 dark:hover:bg-gray-800/50"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
-
-      {/* Mobile Dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-blue-600 text-white space-y-4 p-4">
-          <Link to="/" className="block">Home</Link>
-          <Link to="/about" className="block">About</Link>
-          <Link to="/projects" className="block">Projects</Link>
-          <Link to="/contact" className="block">Contact</Link>
-        </div>
-      )}
-    </nav>
+    </header>
   );
 };
 
