@@ -1,41 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import GradientName from "./GradientName";
+import { useTheme } from "./ThemeProvider"; // Import the theme hook
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-
-  // Handle theme switching
-  useEffect(() => {
-    // Check user preference from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    if (savedTheme === "light") {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    } else if (savedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else if (prefersDark) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
-  };
+  const { isDarkMode, toggleTheme } = useTheme(); // Get theme state and toggle function
 
   // Handle scroll effect
   useEffect(() => {
@@ -74,31 +47,25 @@ const Navbar = () => {
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Logo */}
-          <Link 
-            to="/" 
-            className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity"
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-              Mohit Malaya Nandy
-            </span>
-          </Link>
-          
+          <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity">
+            <GradientName />
+          </div>
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.to}
-                className={`px-3 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 ${
-                  isActive(link.to)
+                className={`px-3 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 ${isActive(link.to)
                     ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
                     : "text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:text-blue-400 dark:hover:bg-gray-800/50"
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>
             ))}
-            
+
             {/* Theme Toggle - Desktop */}
             <button
               onClick={toggleTheme}
@@ -141,23 +108,21 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Menu Dropdown */}
-      <div 
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen 
-            ? "max-h-96 opacity-100 border-t border-gray-200 dark:border-gray-800" 
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen
+            ? "max-h-96 opacity-100 border-t border-gray-200 dark:border-gray-800"
             : "max-h-0 opacity-0"
-        }`}
+          }`}
       >
         <div className="px-4 py-2 bg-white dark:bg-black space-y-1">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               to={link.to}
-              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
-                isActive(link.to)
+              className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive(link.to)
                   ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
                   : "text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-gray-100 dark:hover:text-blue-400 dark:hover:bg-gray-800/50"
-              }`}
+                }`}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}

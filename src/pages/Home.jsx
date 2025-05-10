@@ -5,24 +5,23 @@ import { assets } from "../assets/assets";
 
 const Home = () => {
   return (
-    <section className="min-h-screen bg-black text-white flex items-center justify-center p-8">
+    <section className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex items-center justify-center p-8">
       <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-        
+
         {/* Profile Illustration */}
         <div className="relative order-1 md:order-none mx-auto md:mx-0 w-full max-w-2xl">
           <div className="aspect-square relative">
             <img
               src={assets.illustration} // Update path based on your project structure
               alt="Profile Illustration"
-              className="w-full p-6 sm:p-10 lg:p-14 rounded-3xl object-cover"
-            />
-            
+              className="w-full p-6 sm:p-10 lg:p-14 rounded-3xl object-cover cursor-none" />
+
             {/* Circular Text Button */}
             <div className="absolute bottom-4 sm:bottom-2 left-4 sm:left-2">
               <div className="relative w-24 sm:w-32 h-24 sm:h-32 flex items-center justify-center">
                 {/* Rotating Text */}
                 <div className="absolute w-full h-full animate-spin-slow">
-                  <svg viewBox="0 0 100 100" className="w-full h-full fill-white">
+                  <svg viewBox="0 0 100 100" className="w-full h-full fill-black dark:fill-white">
                     <defs>
                       <path
                         id="circlePath"
@@ -36,8 +35,8 @@ const Home = () => {
                     </text>
                   </svg>
                 </div>
-                <button 
-                  className="absolute z-10 bg-white text-black font-bold text-base py-3 px-2 sm:py-7 sm:px-3 rounded-full border border-white hover:bg-black hover:text-white transition-colors duration-100">
+                <button
+                  className="absolute z-10 bg-black text-white dark:bg-white dark:text-black font-bold text-base py-3 px-2 sm:py-7 sm:px-3 rounded-full border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-colors duration-100">
                   Hire Me
                 </button>
               </div>
@@ -51,21 +50,16 @@ const Home = () => {
             Crafting ideas into <br className="hidden sm:block" /> digital masterpieces <br className="hidden sm:block" /> through code and design
           </h1>
           
-          <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 max-w-xl mx-auto md:mx-0">
-            As a skilled full-stack developer, I am dedicated to turning ideas into innovative web applications. 
-            Explore my latest projects and articles, showcasing my expertise in React.js and web development.
-          </p>
-
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-            <button 
-              className="bg-white text-black hover:bg-gray-200 text-sm px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors duration-300"
+            <button
+              className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 text-sm px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors duration-300"
               aria-label="Download Resume"
             >
               <Download size={16} /> Resume
             </button>
-            <button 
-              className="text-white border border-white hover:bg-white hover:text-black text-sm px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors duration-300"
+            <button
+              className="text-black dark:text-white border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black text-sm px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors duration-300"
               aria-label="Contact Me"
             >
               <Mail size={16} /> Contact
@@ -81,11 +75,11 @@ const Home = () => {
               { Icon: FaPinterest, label: "Pinterest", hoverColor: "hover:text-red-500" },
               { Icon: FaDribbble, label: "Dribbble", hoverColor: "hover:text-pink-500" }
             ].map(({ Icon, label, hoverColor }) => (
-              <a 
+              <a
                 key={label}
-                href="#" 
+                href="#"
                 aria-label={label}
-                className={`text-white ${hoverColor} text-lg sm:text-xl transition-colors duration-300`}
+                className={`text-black dark:text-white ${hoverColor} text-lg sm:text-xl transition-colors duration-300`}
               >
                 <Icon />
               </a>

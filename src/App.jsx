@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AppRoutes from './routes/AppRoutes';
 import Modal from './components/Modal';
+import { ThemeProvider } from './components/common/ThemeProvider';
 
 function App() {
   // State to control modal visibility
@@ -23,12 +24,14 @@ function App() {
   };
 
   return (
+    <ThemeProvider>
     <Router>
       {isModalVisible && <Modal onClose={handleCloseModal} />}
       <Layout>
         <AppRoutes />
       </Layout>
     </Router>
+    </ThemeProvider>
   );
 }
 

@@ -8,4 +8,15 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  theme: {
+    extend: {
+      // ... your other extensions
+      cursor: {
+        'none': 'none',
+      },
+      animation: {
+        'spin-slow': 'spin 15s linear infinite',
+      },
+    },
+  },
 })
