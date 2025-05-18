@@ -1,41 +1,67 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// Create context
-const ThemeContext = createContext();
+// Create context with default values
+const ThemeContext = createContext({
+  isDarkMode: false,
+  toggleTheme: () => {}
+});
 
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Initialize with null to properly handle hydration
+  const [isDarkMode, setIsDarkMode] = useState(null);
 
-  // Initialize theme on component mount
+  // Handle initial theme setup
   useEffect(() => {
+    // Check localStorage first
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Set initial theme based on localStorage or system preference
-    const shouldUseDarkMode = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
-    if (shouldUseDarkMode) {
-      document.documentElement.classList.add('dark');
+    // If theme is explicitly set in localStorage, use that
+    if (savedTheme === 'dark') {
       setIsDarkMode(true);
-    } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
       setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      // If no saved preference, check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setIsDarkMode(prefersDark);
+      
+      if (prefersDark) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
     }
   }, []);
 
-  // Function to toggle theme
+  // Function to toggle theme with debugging
   const toggleTheme = () => {
-    const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
+    console.log('Toggle theme clicked. Current mode:', isDarkMode);
     
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
+    setIsDarkMode(prevMode => {
+      const newMode = !prevMode;
+      console.log('New mode will be:', newMode);
+      
+      // Update DOM and localStorage
+      if (newMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+      
+      return newMode;
+    });
   };
+
+  // Don't render children until we've determined the theme to prevent flickering
+  if (isDarkMode === null) {
+    return null; // Or a loading indicator
+  }
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
@@ -47,10 +73,12 @@ export const ThemeProvider = ({ children }) => {
 // Custom hook to use the theme context
 export const useTheme = () => {
   const context = useContext(ThemeContext);
+  
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
+  
   return context;
 };
 
-export default ThemeProvider;
+// We're not exporting a default to avoid confusion

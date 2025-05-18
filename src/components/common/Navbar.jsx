@@ -2,13 +2,25 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import GradientName from "./GradientName";
-import { useTheme } from "./ThemeProvider"; // Import the theme hook
+import { useTheme } from "./ThemeProvider"; // Make sure this path is correct
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const { isDarkMode, toggleTheme } = useTheme(); // Get theme state and toggle function
+  
+  // Add error handling and debugging for theme context
+  let themeContext;
+  try {
+    themeContext = useTheme();
+    console.log("Theme context loaded:", themeContext);
+  } catch (error) {
+    console.error("Error loading theme context:", error);
+    // Provide fallback values
+    themeContext = { isDarkMode: false, toggleTheme: () => console.log("Fallback toggle") };
+  }
+  
+  const { isDarkMode, toggleTheme } = themeContext;
 
   // Handle scroll effect
   useEffect(() => {
@@ -41,6 +53,14 @@ const Navbar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   };
+  
+  // Add debugging for theme toggle
+  const handleThemeToggle = () => {
+    console.log("Theme toggle button clicked");
+    console.log("Before toggle, isDarkMode:", isDarkMode);
+    toggleTheme();
+    // We can't log the updated state here as it won't be updated until the next render
+  }
 
   return (
     <header className={`fixed w-full top-0 z-50 ${scrolled ? "backdrop-blur-xs bg-white/80 dark:bg-black/80 shadow-md" : "bg-white dark:bg-black"} transition-all duration-400`}>
@@ -68,10 +88,9 @@ const Navbar = () => {
 
             {/* Theme Toggle - Desktop */}
             <button
-              onClick={toggleTheme}
+              onClick={handleThemeToggle}
               className="ml-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-            >
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
               {isDarkMode ? (
                 <Sun size={20} className="text-yellow-400" />
               ) : (
@@ -84,7 +103,7 @@ const Navbar = () => {
           <div className="flex items-center md:hidden space-x-2">
             {/* Theme Toggle - Mobile */}
             <button
-              onClick={toggleTheme}
+              onClick={handleThemeToggle}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
