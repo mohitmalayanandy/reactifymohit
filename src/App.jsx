@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AppRoutes from './routes/AppRoutes';
 import Modal from './components/ui/Modal';
@@ -23,14 +22,14 @@ function App() {
   };
 
   return (
-    <Router>
+    <>
       {isModalVisible && <Modal onClose={handleCloseModal} />}
       <Layout>
         <ProjectProvider>
         <AppRoutes />
         </ProjectProvider>
       </Layout>
-    </Router>
+    </>
   );
 }
 
