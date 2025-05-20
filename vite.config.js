@@ -1,23 +1,19 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
+import { resolve } from 'path';
+import fs from 'fs';
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/reactifymohit/',
   plugins: [
     react(),
-    tailwindcss(),
-  ],
-  base: '/reactifymohit/',
-  theme: {
-    extend: {
-      // ... your other extensions
-      cursor: {
-        'none': 'none',
-      },
-      animation: {
-        'spin-slow': 'spin 15s linear infinite',
-      },
-    },
-  },
-})
+    {
+      name: 'copy-index-to-404',
+      closeBundle() {
+        const indexPath = resolve(__dirname, 'dist/index.html');
+        const notFoundPath = resolve(__dirname, 'dist/404.html');
+        fs.copyFileSync(indexPath, notFoundPath);
+      }
+    }
+  ]
+});
