@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/reactifymohit/',
   plugins: [
     react(),
+    tailwindcss(),
     {
       name: 'copy-index-to-404',
       closeBundle() {
