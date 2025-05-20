@@ -1,0 +1,138 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Neural Portfolio",
+      "description": "Portfolio website with AI-powered interactions, dynamic theme generation, and real-time analytics dashboard.",
+      "category": "frontend",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 142,
+        "forks": 38,
+        "views": "12K+"
+      },
+      "techStack": ["React", "Three.js", "TensorFlow.js", "Tailwind"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "title": "TaskFlow AI",
+      "description": "Task management system with smart prioritization, natural language processing, and predictive completion times.",
+      "category": "fullstack",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 218,
+        "forks": 53,
+        "views": "24K+"
+      },
+      "techStack": ["Node.js", "Express", "MongoDB", "React", "GPT API"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": true
+    },
+    {
+      "id": 3,
+      "title": "NexusMarket",
+      "description": "E-commerce platform with AR product visualization, personalized recommendations, and blockchain payment integration.",
+      "category": "fullstack",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 187,
+        "forks": 42,
+        "views": "18K+"
+      },
+      "techStack": ["Next.js", "GraphQL", "PostgreSQL", "Stripe", "AR.js"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": false
+    },
+    {
+      "id": 4,
+      "title": "DataPulse",
+      "description": "Real-time data visualization dashboard with customizable widgets, data source integration, and alert systems.",
+      "category": "backend",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 156,
+        "forks": 27,
+        "views": "9K+"
+      },
+      "techStack": ["Python", "FastAPI", "Redis", "D3.js", "WebSockets"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": false
+    },
+    {
+      "id": 5,
+      "title": "HoloConference",
+      "description": "Virtual meeting platform with 3D avatars, spatial audio, and collaborative whiteboard functionalities.",
+      "category": "frontend",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 205,
+        "forks": 49,
+        "views": "22K+"
+      },
+      "techStack": ["React", "WebRTC", "Three.js", "Socket.io"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": true
+    },
+    {
+      "id": 6,
+      "title": "SynthGenesis",
+      "description": "Generative art platform with custom algorithms, user collaboration, and interactive gallery experiences.",
+      "category": "creative",
+      "image": "/api/placeholder/500/300",
+      "metrics": {
+        "stars": 134,
+        "forks": 31,
+        "views": "15K+"
+      },
+      "techStack": ["Canvas API", "WebGL", "p5.js", "GLSL"],
+      "liveUrl": "#",
+      "githubUrl": "#",
+      "featured": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "all",
+      "name": "All",
+      "description": "All projects across categories"
+    },
+    {
+      "id": "featured",
+      "name": "Featured",
+      "description": "Highlighted projects representing my best work"
+    },
+    {
+      "id": "frontend",
+      "name": "Frontend",
+      "description": "Projects focused on user interfaces and client-side development"
+    },
+    {
+      "id": "backend",
+      "name": "Backend",
+      "description": "Projects focused on server-side and API development"
+    },
+    {
+      "id": "fullstack",
+      "name": "Fullstack",
+      "description": "End-to-end projects covering both frontend and backend"
+    },
+    {
+      "id": "creative",
+      "name": "Creative",
+      "description": "Projects focused on visual arts and interactive experiences"
+    }
+  ],
+  "stats": {
+    "hoursCoded": "2,400+",
+    "projectsCompleted": "15+",
+    "githubStars": "1.2K+",
+    "uptime": "99.8%"
+  }
+}
