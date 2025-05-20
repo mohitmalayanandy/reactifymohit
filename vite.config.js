@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/reactifymohit/',
   theme: {
     extend: {
       // ... your other extensions
