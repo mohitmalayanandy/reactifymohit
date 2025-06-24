@@ -459,7 +459,7 @@ const Contact = () => {
               >
                 <span className="flex items-center bg-gradient-to-r from-blue-900/60 to-cyan-900/60 px-4 py-2 rounded-lg border border-blue-500/20">
                   <span className="w-2 h-2 rounded-full bg-cyan-400 mr-2 animate-pulse group-hover:animate-ping"></span>
-                  quantum@nexus.io
+                  moitoxin@gmail.com
                   <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">[encrypted]</span>
                 </span>
               </a>
